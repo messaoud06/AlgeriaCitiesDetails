@@ -19,4 +19,7 @@ The project is on Spring Boot 3 & JDK 17, below more details :
 | H2 Database         | 2.1.214 |
 
 
+### Example
+
+![AlgeriaCities.png](..%2F..%2F..%2F..%2FPictures%2FAlgeriaCities.png)
 

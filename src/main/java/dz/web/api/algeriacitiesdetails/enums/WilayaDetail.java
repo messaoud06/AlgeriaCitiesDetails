@@ -5,6 +5,7 @@ package dz.web.api.algeriacitiesdetails.enums;
  */
 public enum WilayaDetail {
         ALL,
+        WILAYA_ONLY,
         DAIRA_ONLY,
         COMMUNE_ONLY
 }

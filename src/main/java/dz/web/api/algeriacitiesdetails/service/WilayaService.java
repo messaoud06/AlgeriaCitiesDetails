@@ -26,6 +26,7 @@ public class WilayaService {
 
         JacksonProviderConfig.fieldNames.clear();
         switch (details){
+            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add("dairaList");
             case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add("communes");
             case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
