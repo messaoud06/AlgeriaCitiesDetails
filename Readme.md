@@ -21,5 +21,4 @@ The project is on Spring Boot 3 & JDK 17, below more details :
 
 ### Example
 
-![AlgeriaCities.png](..%2F..%2F..%2F..%2FPictures%2FAlgeriaCities.png)
-
+![AlgeriaCities.png](AlgeriaCities.png)
