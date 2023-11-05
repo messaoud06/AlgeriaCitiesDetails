@@ -5,6 +5,7 @@ import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
 import dz.web.api.algeriacitiesdetails.repository.DairaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class DairaService {
 
     private final DairaRepository dairaRepository;
@@ -25,6 +27,12 @@ public class DairaService {
             case DAIRA_ONLY, COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
         }
+
+        log.info("Getting Daira {} Wilaya {} from Database with detail {} ",
+                dairaId,
+                wilayaid,
+                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL"
+        );
 
         return dairaRepository.findDairaByIdAndWilaya_WilayaCode(dairaId,wilayaid);
 
@@ -37,6 +45,12 @@ public class DairaService {
             case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
         }
+
+        log.info("Getting All Daira for Wilaya {} from Database with detail {} ",
+                wilyaCode,
+                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL");
+
+
 
         return dairaRepository.findAllByWilaya_WilayaCode(wilyaCode);
     }
