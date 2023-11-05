@@ -4,6 +4,7 @@ import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
 import dz.web.api.algeriacitiesdetails.model.WilayaDto;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/wilaya")
 @RequiredArgsConstructor
+@Log4j2
 public class WilayaController {
 
     private final WilayaService wilayaService;
 
 
-
     @GetMapping("/")
     ResponseEntity<?> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
 
-
-      //  Pageable paging = PageRequest.of(pageNbr, pageSize, Sort.by("id"));
-       // return ResponseEntity.ok(wilayaService.getAllWilaya1(details,paging));
+        log.info("Getting All Wilaya with detail {}", detail.name());
 
        return ResponseEntity.ok(wilayaService.getAllWilaya(detail));
     }
@@ -34,9 +33,13 @@ public class WilayaController {
 
         return wilayaService.getWilayaById(wilayaId,detail)
                 .map(wilaya -> {
+                    log.info("Getting Wilaya {} with detail {}", wilayaId,detail);
                     return ResponseEntity
                             .ok()
                             .body(WilayaDto.build(wilaya));
-                }).orElse(ResponseEntity.notFound().build());
+                }).orElseGet(() ->{
+                    log.warn("There no content for wilaya {} with detail {}",wilayaId,detail);
+                    return ResponseEntity.notFound().build();
+                });
     }
 }
