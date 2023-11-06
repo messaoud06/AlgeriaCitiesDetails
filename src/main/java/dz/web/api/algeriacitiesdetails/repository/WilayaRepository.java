@@ -1,7 +1,6 @@
 package dz.web.api.algeriacitiesdetails.repository;
 
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
-import dz.web.api.algeriacitiesdetails.model.MyPage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
