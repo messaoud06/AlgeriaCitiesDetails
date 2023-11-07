@@ -9,6 +9,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +31,13 @@ import java.util.Map;
 @Slf4j
 public class ExceptionHandlerAdvice  {
 
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<?> contentTypeSupported(HttpServletRequest request, HttpMediaTypeNotSupportedException exception){
+
+        log.error("Content Type Not Supported {} for {} Host {}", request.getMethod(),request.getRequestURI(), Utils.getIpAddressFromHeader(request));
+        return new ResponseEntity<>("Content Type Not Supported ", HttpStatus.METHOD_NOT_ALLOWED);
+    }
 
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)

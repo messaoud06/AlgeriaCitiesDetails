@@ -5,6 +5,7 @@ import dz.web.api.algeriacitiesdetails.model.WilayaDto;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * @Author Messaoud GUERNOUTI on 10/26/2023
  */
 @RestController
-@RequestMapping("/wilaya")
+@RequestMapping(value = "/wilaya",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Log4j2
 public class WilayaController {
