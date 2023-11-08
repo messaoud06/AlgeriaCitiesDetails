@@ -4,6 +4,7 @@ import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
 import dz.web.api.algeriacitiesdetails.service.DairaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class DairaController {
 
     @GetMapping("/")
     ResponseEntity<?> getAll(@PathVariable String wilayaId,
-                             @RequestParam(required = false,defaultValue = "ALL") WilayaDetail detail){
+                             @RequestParam(required = false,defaultValue = "ALL") @NotNull WilayaDetail detail){
 
         log.info("Getting All Daira for WilayaCode {} with detail {}",wilayaId, detail.name());
         return ResponseEntity.ok(dairaService.getAll(wilayaId,detail));
@@ -32,7 +33,7 @@ public class DairaController {
     @GetMapping({"/{dairaId}","/{dairaId}/"})
     ResponseEntity<?> getDairaByName(@PathVariable String wilayaId,
                                          @PathVariable Long dairaId,
-                                         @RequestParam(required = false,defaultValue = "ALL") WilayaDetail detail){
+                                         @RequestParam(required = false,defaultValue = "ALL") @NotNull WilayaDetail detail){
 
         return dairaService.getDairaByName(wilayaId, dairaId,detail).map(daira -> {
             log.info("Getting  Daira {} for WilayaCode {} with detail {}",dairaId, wilayaId, detail.name());

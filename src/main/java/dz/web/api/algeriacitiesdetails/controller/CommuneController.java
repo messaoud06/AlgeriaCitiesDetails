@@ -4,6 +4,7 @@ import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
 import dz.web.api.algeriacitiesdetails.service.CommuneService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class CommuneController {
     @GetMapping("/")
     ResponseEntity<?> getAllCommuneByDairaId(@PathVariable String wilayaId,
                                              @PathVariable Long dairaId,
-                                             @RequestParam(required = false,defaultValue = "ALL") WilayaDetail detail){
+                                             @RequestParam(required = false,defaultValue = "ALL") @NotNull WilayaDetail detail){
 
         log.info("Getting All Commune for Daira {} for WilayaCode {} with detail {}",dairaId,wilayaId, detail.name());
         return ResponseEntity.ok(communeService.getAllByDairaId(dairaId,wilayaId,detail));
@@ -38,10 +39,10 @@ public class CommuneController {
 
         return communeService.getCommuneById(communeId,dairaId,wilayaId)
                 .map(commune -> {
-                    log.info("Getting Commune {}  Daira {} for WilayaCode {} with detail {}",communeId,dairaId, wilayaId);
+                    log.info("Getting Commune {}  Daira {} for WilayaCode {}",communeId,dairaId, wilayaId);
                     return ResponseEntity.ok(commune);
                 }).orElseGet(() ->{
-                    log.warn("There no content for commune {} Daira {}  wilaya {} with detail {}",communeId,dairaId,wilayaId);
+                    log.warn("There no content for commune {} Daira {}  wilaya {}",communeId,dairaId,wilayaId);
                     return ResponseEntity.notFound().build();
                 });
 

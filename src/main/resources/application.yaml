@@ -26,3 +26,13 @@ spring:
     resources:
       add-mappings: false
 
+#### Actuator Config
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+
