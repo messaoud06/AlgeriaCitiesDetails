@@ -31,7 +31,7 @@ public class DairaService {
         log.info("Getting Daira {} Wilaya {} from Database with detail {} ",
                 dairaId,
                 wilayaid,
-                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL"
+                (JacksonProviderConfig.fieldNames.size()>0)? detail.name():"ALL"
         );
 
         return dairaRepository.findDairaByIdAndWilaya_WilayaCode(dairaId,wilayaid);
@@ -48,9 +48,7 @@ public class DairaService {
 
         log.info("Getting All Daira for Wilaya {} from Database with detail {} ",
                 wilyaCode,
-                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL");
-
-
+                (JacksonProviderConfig.fieldNames.size()>0)? detail.name():"ALL");
 
         return dairaRepository.findAllByWilaya_WilayaCode(wilyaCode);
     }

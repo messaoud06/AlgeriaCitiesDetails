@@ -4,6 +4,7 @@ import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
 import dz.web.api.algeriacitiesdetails.model.WilayaDto;
+import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.repository.WilayaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +25,7 @@ public class WilayaService {
 
     private final WilayaRepository wilayaRepository;
 
-    public List<WilayaDto> getAllWilaya(WilayaDetail details) {
+    public List<WilayaDtoRecord> getAllWilaya(WilayaDetail details) {
 
         JacksonProviderConfig.fieldNames.clear();
         switch (details){
@@ -34,11 +35,11 @@ public class WilayaService {
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
         }
 
-        log.info("Getting All Wilaya from Database with detail {} ",(JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL");
+        log.info("Getting All Wilaya from Database with detail {} ",(JacksonProviderConfig.fieldNames.size()>0)? details.name():"ALL");
 
         return wilayaRepository.findAll().stream()
                 .sorted(Comparator.comparing(Wilaya::getId))
-                .map(wilaya -> WilayaDto.build(wilaya))
+                .map(wilaya -> WilayaDtoRecord.build(wilaya))
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +54,7 @@ public class WilayaService {
 
         log.info("Getting Wilaya {} from Database with detail {} ",
                 wilayaId,
-                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL"
+                (JacksonProviderConfig.fieldNames.size()>0)? details.name():"ALL"
         );
         return wilayaRepository.findWilayasByWilayaCode(wilayaId);
     }

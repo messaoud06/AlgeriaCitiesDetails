@@ -24,15 +24,15 @@ public class CommuneService {
     public List<Commune> getAllByDairaId(Long dairaId, String wilayaid, WilayaDetail detail) {
 
         JacksonProviderConfig.fieldNames.clear();
-        switch (detail){
-            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            case ALL ->  JacksonProviderConfig.fieldNames.clear();
+
+        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name())) {
+            JacksonProviderConfig.fieldNames.add("postDetails");
         }
 
         log.info("Getting All Commune Daira {} for Wilaya {} from Database with detail {} ",
                 dairaId,
                 wilayaid,
-                (JacksonProviderConfig.fieldNames.size()>0)? JacksonProviderConfig.fieldNames.toArray()[0]:"ALL");
+                (JacksonProviderConfig.fieldNames.isEmpty())? detail.name():"ALL");
 
         return communeRepository.findAllByDaira_IdAndDaira_Wilaya_WilayaCode(dairaId,wilayaid);
     }
