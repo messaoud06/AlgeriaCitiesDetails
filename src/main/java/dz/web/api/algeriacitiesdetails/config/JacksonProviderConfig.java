@@ -17,7 +17,7 @@ import java.util.Set;
 @Configuration
 public class JacksonProviderConfig {
 
-    public static Set<String> fieldNames = new HashSet<String>();
+    public static  Set<String> fieldNames = new HashSet<>();
 
     @Bean
     public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
@@ -31,5 +31,7 @@ public class JacksonProviderConfig {
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;
     }
+
+
 
 }

@@ -16,6 +16,6 @@ public interface DairaRepository extends JpaRepository<Daira, Long> {
 
     Optional<Daira> findDairaByIdAndWilaya_WilayaCode(Long dairaId, String wilayaId);
 
-    List<Daira> findAllByWilaya_WilayaCode(String WilayaCode);
+    List<Daira> findAllByWilaya_WilayaCode(String wilayaCode);
 
 }

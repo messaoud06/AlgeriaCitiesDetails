@@ -33,7 +33,7 @@ public class ExceptionHandlerAdvice  {
 
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public ResponseEntity<?> contentTypeSupported(HttpServletRequest request, HttpMediaTypeNotSupportedException exception){
+    public ResponseEntity<String> contentTypeSupported(HttpServletRequest request, HttpMediaTypeNotSupportedException exception){
 
         log.error("Content Type Not Supported {} for {} Host {}", request.getMethod(),request.getRequestURI(), Utils.getIpAddressFromHeader(request));
         return new ResponseEntity<>("Content Type Not Supported ", HttpStatus.METHOD_NOT_ALLOWED);
@@ -41,7 +41,7 @@ public class ExceptionHandlerAdvice  {
 
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<?> methodNototSupported(HttpServletRequest request, HttpRequestMethodNotSupportedException exception){
+    public ResponseEntity<String> methodNototSupported(HttpServletRequest request, HttpRequestMethodNotSupportedException exception){
 
         log.error("Method Not Supported  {} for {} Host {}", request.getMethod(),request.getRequestURI(), Utils.getIpAddressFromHeader(request));
         return new ResponseEntity<>("Method Not Supported ", HttpStatus.METHOD_NOT_ALLOWED);
@@ -59,14 +59,15 @@ public class ExceptionHandlerAdvice  {
                         values = fieldsErrorsMap.get(fieldError.getField());
                     }
                     values.add(fieldError.getDefaultMessage());
-                    //values.add(messageSource.getMessage(fieldError.getDefaultMessage(),null, new Locale("fr")));
                     fieldsErrorsMap.put(fieldError.getField(), values);
                 });
 
         List<FieldErrorModel> errors = new ArrayList<>();
-        fieldsErrorsMap.entrySet().stream().forEach(entry -> {
-            errors.add(new FieldErrorModel(entry.getKey(), entry.getValue()));
-        });
+        fieldsErrorsMap.
+                entrySet()
+                .stream()
+                .forEach(entry -> errors.add(new FieldErrorModel(entry.getKey(), entry.getValue())
+        ));
 
         log.error("Invalid Argument {} ", errors.toString());
         return new ResponseEntity<>(errors,HttpStatus.NOT_ACCEPTABLE);

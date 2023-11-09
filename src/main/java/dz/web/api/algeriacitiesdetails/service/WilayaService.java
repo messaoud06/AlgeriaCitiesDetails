@@ -35,12 +35,12 @@ public class WilayaService {
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
         }
 
-        log.info("Getting All Wilaya from Database with detail {} ",(JacksonProviderConfig.fieldNames.size()>0)? details.name():"ALL");
+        log.info("Getting All Wilaya from Database with detail {} ",(JacksonProviderConfig.fieldNames.isEmpty())? details.name():"ALL");
 
         return wilayaRepository.findAll().stream()
                 .sorted(Comparator.comparing(Wilaya::getId))
-                .map(wilaya -> WilayaDtoRecord.build(wilaya))
-                .collect(Collectors.toList());
+                .map(WilayaDtoRecord::build)
+                .toList();
     }
 
     public Optional<Wilaya> getWilayaById(String wilayaId, WilayaDetail details) {
@@ -49,12 +49,12 @@ public class WilayaService {
         switch (details){
             case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add("communes");
             case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            case ALL ->  JacksonProviderConfig.fieldNames.clear();
+            default ->  JacksonProviderConfig.fieldNames.clear();
         }
 
         log.info("Getting Wilaya {} from Database with detail {} ",
                 wilayaId,
-                (JacksonProviderConfig.fieldNames.size()>0)? details.name():"ALL"
+                (JacksonProviderConfig.fieldNames.isEmpty())? details.name():"ALL"
         );
         return wilayaRepository.findWilayasByWilayaCode(wilayaId);
     }

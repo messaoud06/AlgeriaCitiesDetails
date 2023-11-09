@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class Utils {
 
+    private Utils(){
+
+    }
+
     private static final List<String> POSSIBLE_IP_HEADERS = List.of(
             "X-Forwarded-For",
             "HTTP_FORWARDED",
@@ -41,10 +45,10 @@ public class Utils {
             }
         }
 
-        if (headerValue == null &&
-                (request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV4) ||
-                        request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV6))
-        )
+
+
+        if (request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV4) ||
+            request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV6))
         {
             return "localhost";
         }

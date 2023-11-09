@@ -23,15 +23,16 @@ public class DairaService {
     public Optional<Daira> getDairaByName(String wilayaid, Long dairaId, WilayaDetail detail) {
 
         JacksonProviderConfig.fieldNames.clear();
-        switch (detail){
-            case DAIRA_ONLY, COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            case ALL ->  JacksonProviderConfig.fieldNames.clear();
+
+        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name()) ||
+                detail.name().equalsIgnoreCase(WilayaDetail.DAIRA_ONLY.name())) {
+            JacksonProviderConfig.fieldNames.add("postDetails");
         }
 
         log.info("Getting Daira {} Wilaya {} from Database with detail {} ",
                 dairaId,
                 wilayaid,
-                (JacksonProviderConfig.fieldNames.size()>0)? detail.name():"ALL"
+                (JacksonProviderConfig.fieldNames.isEmpty())? detail.name():"ALL"
         );
 
         return dairaRepository.findDairaByIdAndWilaya_WilayaCode(dairaId,wilayaid);
@@ -41,14 +42,15 @@ public class DairaService {
     public List<Daira> getAll(String wilyaCode,WilayaDetail detail) {
 
         JacksonProviderConfig.fieldNames.clear();
-        switch (detail){
-            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            case ALL ->  JacksonProviderConfig.fieldNames.clear();
+
+        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name())) {
+            JacksonProviderConfig.fieldNames.add("postDetails");
         }
+
 
         log.info("Getting All Daira for Wilaya {} from Database with detail {} ",
                 wilyaCode,
-                (JacksonProviderConfig.fieldNames.size()>0)? detail.name():"ALL");
+                (JacksonProviderConfig.fieldNames.isEmpty())? detail.name():"ALL");
 
         return dairaRepository.findAllByWilaya_WilayaCode(wilyaCode);
     }
