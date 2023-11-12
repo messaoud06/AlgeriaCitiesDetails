@@ -1,7 +1,7 @@
 package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
-import dz.web.api.algeriacitiesdetails.model.WilayaDto;
+import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,8 +41,8 @@ class WilayaControllerTests {
     @DisplayName("Get All Wilaya Success")
     void testAllWilayaSuccess() throws Exception {
 
-        WilayaDto wilayaDto = new WilayaDto("01","Test","",null);
-        WilayaDto wilayaDto1 = new WilayaDto("02","Test","",null);
+        WilayaDtoRecord wilayaDto = new WilayaDtoRecord("01","Test","",null);
+        WilayaDtoRecord wilayaDto1 = new WilayaDtoRecord("02","Test","",null);
         doReturn(List.of(wilayaDto,wilayaDto1)).when(wilayaService).getAllWilaya(any());
 
 

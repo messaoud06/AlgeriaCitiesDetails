@@ -2,7 +2,6 @@ package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.entity.Commune;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
-import dz.web.api.algeriacitiesdetails.model.WilayaDto;
 import dz.web.api.algeriacitiesdetails.service.CommuneService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -3,7 +3,6 @@ package dz.web.api.algeriacitiesdetails.service;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
-import dz.web.api.algeriacitiesdetails.model.WilayaDto;
 import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.repository.WilayaRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @Author Messaoud GUERNOUTI on 10/26/2023

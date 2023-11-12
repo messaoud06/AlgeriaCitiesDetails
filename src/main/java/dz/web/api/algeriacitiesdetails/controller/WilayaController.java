@@ -1,7 +1,7 @@
 package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
-import dz.web.api.algeriacitiesdetails.model.WilayaDto;
+import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -53,7 +53,7 @@ public class WilayaController {
                     log.info("Getting Wilaya {} with detail {}", wilayaId,detail);
                     return ResponseEntity
                             .ok()
-                            .body(WilayaDto.build(wilaya));
+                            .body(WilayaDtoRecord.build(wilaya));
                 }).orElseGet(() ->{
                     log.warn("There no content for wilaya {} with detail {}",wilayaId,detail);
                     return ResponseEntity.notFound().build();
