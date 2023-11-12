@@ -26,9 +26,9 @@ public class WilayaController {
 
 
     @GetMapping("/")
-    ResponseEntity<?> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") @NotNull WilayaDetail detail){
+    ResponseEntity<?> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
 
-        log.info("Getting All Wilaya with detail {}", detail.name());
+        log.info("Getting All Wilaya with details {}", detail.name());
 
         Counter counter = Counter.builder("wilaya_all")
                 .tag("title", "all_wilaya")
