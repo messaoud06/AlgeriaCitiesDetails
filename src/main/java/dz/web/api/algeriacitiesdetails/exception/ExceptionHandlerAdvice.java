@@ -40,14 +40,12 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        //return super.handleMethodArgumentNotValid(ex, headers, status, request);
+
         ServletWebRequest servletWebRequest = (ServletWebRequest) request;
 
         Map<String,String> errors = new HashMap<>();
         List<ObjectError> list = ex.getBindingResult().getAllErrors();
-        list.forEach(objectError -> {
-            errors.put(objectError.getObjectName(), objectError.getDefaultMessage());
-        });
+        list.forEach(objectError -> errors.put(objectError.getObjectName(), objectError.getDefaultMessage()));
 
         log.error("Invalid Argument {} for {} Host {}", servletWebRequest.getHttpMethod().name(),servletWebRequest.getRequest().getRequestURI(), Utils.getIpAddressFromHeader(servletWebRequest.getRequest()));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
@@ -119,9 +117,8 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         List<String> errors = new ArrayList<>();
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
 
-        constraintViolations.forEach(constraintViolation -> {
-            errors.add(constraintViolation.getMessage());
-        });
+        constraintViolations.forEach(constraintViolation -> errors.add(constraintViolation.getMessage()));
+
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
