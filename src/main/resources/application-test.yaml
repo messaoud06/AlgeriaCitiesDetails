@@ -3,4 +3,4 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password: MyPassword
-    url : jdbc:h2:mem:algeria
+    url : jdbc:h2:mem:algeriatest
