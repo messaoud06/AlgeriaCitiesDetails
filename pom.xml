@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dz.web.api</groupId>
-    <artifactId>AlgeriaCitiesDetails</artifactId>
-    <version>1.0.0</version>
+    <artifactId>algeriacitiesdetails</artifactId>
+    <version>1.1.0</version>
     <name>AlgeriaCitiesDetails</name>
     <description>AlgeriaCitiesDetails</description>
     <properties>
@@ -113,6 +113,17 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <to>
+                        <image>messaoud06/${project.artifactId}:${project.version}</image>
+                    </to>
                 </configuration>
             </plugin>
         </plugins>

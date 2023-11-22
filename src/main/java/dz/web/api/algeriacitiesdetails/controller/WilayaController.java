@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author Messaoud GUERNOUTI on 10/26/2023
  */
@@ -26,7 +28,7 @@ public class WilayaController {
 
 
     @GetMapping("/")
-    ResponseEntity<?> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
+    ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
 
         log.info("Getting All Wilaya with details {}", detail.name());
 
