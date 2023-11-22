@@ -5,6 +5,7 @@ import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,11 @@ import java.util.List;
 /**
  * @Author Messaoud GUERNOUTI on 10/26/2023
  */
+
+@Tag(
+        name = "Wilaya details",
+        description = "REST APIs in Algeria Cities to FETCH Wilaya details"
+)
 @RestController
 @RequestMapping(value = "/wilaya",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -42,7 +48,7 @@ public class WilayaController {
     }
 
     @GetMapping(  {"/{wilayaId}","/{wilayaId}/"})
-    ResponseEntity<?> gerWilayaById(@PathVariable String wilayaId,@RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail){
+    ResponseEntity<WilayaDtoRecord> gerWilayaById(@PathVariable String wilayaId,@RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail){
 
         Counter counter = Counter.builder("wilaya_byId")
                 .tag("title", "wiliya_byId")
@@ -55,7 +61,7 @@ public class WilayaController {
                     log.info("Getting Wilaya {} with detail {}", wilayaId,detail);
                     return ResponseEntity
                             .ok()
-                            .body(WilayaDtoRecord.build(wilaya));
+                            .body(wilaya);
                 }).orElseGet(() ->{
                     log.warn("There no content for wilaya {} with detail {}",wilayaId,detail);
                     return ResponseEntity.notFound().build();

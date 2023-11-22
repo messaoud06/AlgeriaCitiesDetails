@@ -9,10 +9,16 @@ import java.util.List;
 /**
  * @Author Messaoud GUERNOUTI on 11/9/2023
  */
-public record WilayaDtoRecord(String wilayaCode, String WilayaNameFr, String wilayaNameAR, List<Daira> dairaList) {
+public record WilayaDtoRecord(String wilayaCode, String WilayaNameFr, String wilayaNameAR, List<DairaDto> dairaList) {
 
     public static WilayaDtoRecord build(Wilaya wilaya){
-        return new WilayaDtoRecord(wilaya.getWilayaCode(),wilaya.getWilayaNameFr(),wilaya.getWilayaNameAr(),new ArrayList<>(wilaya.getDairaSet()));
+
+        List<DairaDto> dairaDtoList = wilaya.getDairaSet()
+                .stream()
+                .map(DairaDto::build)
+                .toList();
+
+        return new WilayaDtoRecord(wilaya.getWilayaCode(),wilaya.getWilayaNameFr(),wilaya.getWilayaNameAr(),dairaDtoList);
     }
 
 }

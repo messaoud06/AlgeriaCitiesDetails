@@ -41,7 +41,7 @@ public class WilayaService {
                 .toList();
     }
 
-    public Optional<Wilaya> getWilayaById(String wilayaId, WilayaDetail details) {
+    public Optional<WilayaDtoRecord> getWilayaById(String wilayaId, WilayaDetail details) {
 
         JacksonProviderConfig.fieldNames.clear();
         switch (details){
@@ -54,7 +54,11 @@ public class WilayaService {
                 wilayaId,
                 (JacksonProviderConfig.fieldNames.isEmpty())? details.name():"ALL"
         );
-        return wilayaRepository.findWilayasByWilayaCode(wilayaId);
+
+
+        return wilayaRepository
+                .findWilayasByWilayaCode(wilayaId)
+                .map(WilayaDtoRecord::build);
     }
 
 }

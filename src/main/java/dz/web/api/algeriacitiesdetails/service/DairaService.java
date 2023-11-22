@@ -3,6 +3,7 @@ package dz.web.api.algeriacitiesdetails.service;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.model.DairaDto;
 import dz.web.api.algeriacitiesdetails.repository.DairaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,7 +21,7 @@ import java.util.Optional;
 public class DairaService {
 
     private final DairaRepository dairaRepository;
-    public Optional<Daira> getDairaByName(String wilayaid, Long dairaId, WilayaDetail detail) {
+    public Optional<DairaDto> getDairaByName(String wilayaid, Long dairaId, WilayaDetail detail) {
 
         JacksonProviderConfig.fieldNames.clear();
 
@@ -35,11 +36,13 @@ public class DairaService {
                 (JacksonProviderConfig.fieldNames.isEmpty())? detail.name():"ALL"
         );
 
-        return dairaRepository.findDairaByIdAndWilaya_WilayaCode(dairaId,wilayaid);
+        return dairaRepository
+                .findDairaByIdAndWilaya_WilayaCode(dairaId,wilayaid)
+                .map(DairaDto::build);
 
     }
 
-    public List<Daira> getAll(String wilyaCode,WilayaDetail detail) {
+    public List<DairaDto> getAll(String wilyaCode,WilayaDetail detail) {
 
         JacksonProviderConfig.fieldNames.clear();
 
@@ -52,6 +55,10 @@ public class DairaService {
                 wilyaCode,
                 (JacksonProviderConfig.fieldNames.isEmpty())? detail.name():"ALL");
 
-        return dairaRepository.findAllByWilaya_WilayaCode(wilyaCode);
+        return dairaRepository
+                .findAllByWilaya_WilayaCode(wilyaCode)
+                .stream()
+                .map(DairaDto::build)
+                .toList();
     }
 }

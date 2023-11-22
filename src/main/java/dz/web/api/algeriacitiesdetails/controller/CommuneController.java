@@ -2,7 +2,9 @@ package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.entity.Commune;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.model.CommuneDto;
 import dz.web.api.algeriacitiesdetails.service.CommuneService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +17,10 @@ import java.util.List;
 /**
  * @Author Messaoud GUERNOUTI on 10/30/2023
  */
+@Tag(
+        name = "Commune details",
+        description = "REST APIs in Algeria Cities to FETCH Commune details"
+)
 @RestController
 @RequestMapping(value = "/wilaya/{wilayaId}/daira/{dairaId}/commune",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
@@ -25,9 +31,9 @@ public class CommuneController {
 
 
     @GetMapping("/")
-    ResponseEntity<List<Commune>> getAllCommuneByDairaId(@PathVariable String wilayaId,
-                                                         @PathVariable Long dairaId,
-                                                         @RequestParam(required = false,defaultValue = "ALL") @NotNull WilayaDetail detail){
+    ResponseEntity<List<CommuneDto>> getAllCommuneByDairaId(@PathVariable String wilayaId,
+                                                            @PathVariable Long dairaId,
+                                                            @RequestParam(required = false,defaultValue = "ALL") @NotNull WilayaDetail detail){
 
         log.info("Getting All Commune for Daira {} for WilayaCode {} with detail {}",dairaId,wilayaId, detail.name());
         return ResponseEntity.ok(communeService.getAllByDairaId(dairaId,wilayaId,detail));
@@ -35,15 +41,15 @@ public class CommuneController {
     }
 
     @GetMapping({"/{communeId}","/{communeId}/"})
-    ResponseEntity<Commune> getCommuneById(@PathVariable String wilayaId,
+    ResponseEntity<CommuneDto> getCommuneById(@PathVariable String wilayaId,
                                      @PathVariable Long dairaId,
                                      @PathVariable Long communeId){
 
 
         return communeService.getCommuneById(communeId,dairaId,wilayaId)
-                .map(commune -> {
+                .map(communeDto -> {
                     log.info("Getting Commune {}  Daira {} for WilayaCode {}",communeId,dairaId, wilayaId);
-                    return ResponseEntity.ok(commune);
+                    return ResponseEntity.ok(communeDto);
                 }).orElseGet(() ->{
                     log.warn("There no content for commune {} Daira {}  wilaya {}",communeId,dairaId,wilayaId);
                     return ResponseEntity.notFound().build();
