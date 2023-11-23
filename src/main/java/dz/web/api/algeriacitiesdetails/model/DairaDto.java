@@ -2,6 +2,7 @@ package dz.web.api.algeriacitiesdetails.model;
 
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.List;
 /**
  * @Author Messaoud GUERNOUTI on 11/22/2023
  */
+@Schema(name = "Daira",
+        description = "Daira information"
+)
 public record DairaDto(String dairaNameFr, String dairaNameAr, List<CommuneDto> communeDtoList) {
 
 

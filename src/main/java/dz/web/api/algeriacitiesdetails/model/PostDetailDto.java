@@ -2,12 +2,16 @@ package dz.web.api.algeriacitiesdetails.model;
 
 import dz.web.api.algeriacitiesdetails.entity.Commune;
 import dz.web.api.algeriacitiesdetails.entity.PostDetail;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 /**
  * @Author Messaoud GUERNOUTI on 11/22/2023
  */
+@Schema(name = "Post",
+        description = "Post information"
+)
 public record PostDetailDto(String postalCode,
                             String postNameFr,
                             String postNameAr,
