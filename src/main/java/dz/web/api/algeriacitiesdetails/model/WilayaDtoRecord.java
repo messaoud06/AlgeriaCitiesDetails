@@ -44,6 +44,11 @@ public record WilayaDtoRecord(
                             @JsonProperty("Dairas")
                             List<DairaDto> dairaList) {
 
+    /**
+     *
+     * @param wilaya
+     * @return
+     */
     public static WilayaDtoRecord build(Wilaya wilaya){
 
         List<DairaDto> dairaDtoList = wilaya.getDairaSet()

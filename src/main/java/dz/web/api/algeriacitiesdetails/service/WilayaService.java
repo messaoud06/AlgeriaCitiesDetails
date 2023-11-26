@@ -23,6 +23,11 @@ public class WilayaService {
 
     private final WilayaRepository wilayaRepository;
 
+    /**
+     *
+     * @param details
+     * @return List Of WilayaDtoRecord
+     */
     public List<WilayaDtoRecord> getAllWilaya(WilayaDetail details) {
 
         JacksonProviderConfig.fieldNames.clear();
@@ -41,6 +46,12 @@ public class WilayaService {
                 .toList();
     }
 
+    /**
+     *
+     * @param wilayaId
+     * @param details
+     * @return
+     */
     public Optional<WilayaDtoRecord> getWilayaById(String wilayaId, WilayaDetail details) {
 
         JacksonProviderConfig.fieldNames.clear();

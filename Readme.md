@@ -20,6 +20,7 @@ The project is on Spring Boot 3 & JDK 17, below more details :
 | micrometer prometheus     | 1.11.5  |
 | Lombok                    | 1.18.30 |
 | H2 Database               | 2.1.214 |
+| SpringDoc (Swagger UI)    | 2.2.0   |
 
 
 ### Example
