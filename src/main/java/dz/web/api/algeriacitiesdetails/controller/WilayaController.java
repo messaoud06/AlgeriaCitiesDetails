@@ -5,6 +5,11 @@ import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +38,32 @@ public class WilayaController {
     private final MeterRegistry meterRegistry;
 
 
+
+    @Operation(
+            summary = "Get All Wilaya details",
+            description = "REST API to get all wilaya information"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status Bad Request",
+                    content = @Content(
+                            schema = @Schema(implementation = String.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = String.class)
+                    )
+            )
+    }
+    )
     @GetMapping("/")
     ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
 
@@ -47,6 +78,39 @@ public class WilayaController {
        return ResponseEntity.ok(wilayaService.getAllWilaya(detail));
     }
 
+
+    @Operation(
+            summary = "Get Wilaya details by Code",
+            description = "REST API to get wilaya information by their identifier"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "HTTP Status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "HTTP Status Bad Request",
+                    content = @Content(
+                            schema = @Schema(implementation = String.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "HTTP Status Not Found",
+                    content = @Content(
+                            schema = @Schema(implementation = String.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = String.class)
+                    )
+            )
+    }
+    )
     @GetMapping(  {"/{wilayaId}","/{wilayaId}/"})
     ResponseEntity<WilayaDtoRecord> gerWilayaById(@PathVariable String wilayaId,@RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail){
 
