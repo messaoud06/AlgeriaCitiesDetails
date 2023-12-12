@@ -3,6 +3,7 @@ package dz.web.api.algeriacitiesdetails.service;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.helper.Utils;
 import dz.web.api.algeriacitiesdetails.model.DairaDto;
 import dz.web.api.algeriacitiesdetails.repository.DairaRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,7 @@ public class DairaService {
     private final DairaRepository dairaRepository;
     public Optional<DairaDto> getDairaByName(String wilayaid, Long dairaId, WilayaDetail detail) {
 
-        JacksonProviderConfig.fieldNames.clear();
-
-        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name()) ||
-                detail.name().equalsIgnoreCase(WilayaDetail.DAIRA_ONLY.name())) {
-            JacksonProviderConfig.fieldNames.add("postDetails");
-        }
+        Utils.updateJsonFilter(detail);
 
         log.info("Getting Daira {} Wilaya {} from Database with detail {} ",
                 dairaId,
@@ -44,11 +40,7 @@ public class DairaService {
 
     public List<DairaDto> getAll(String wilyaCode,WilayaDetail detail) {
 
-        JacksonProviderConfig.fieldNames.clear();
-
-        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name())) {
-            JacksonProviderConfig.fieldNames.add("postDetails");
-        }
+        Utils.updateJsonFilter(detail);
 
 
         log.info("Getting All Daira for Wilaya {} from Database with detail {} ",

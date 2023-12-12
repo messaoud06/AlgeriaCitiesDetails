@@ -3,6 +3,7 @@ package dz.web.api.algeriacitiesdetails.service;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Commune;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.helper.Utils;
 import dz.web.api.algeriacitiesdetails.model.CommuneDto;
 import dz.web.api.algeriacitiesdetails.repository.CommuneRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,7 @@ public class CommuneService {
 
     public List<CommuneDto> getAllByDairaId(Long dairaId, String wilayaid, WilayaDetail detail) {
 
-        JacksonProviderConfig.fieldNames.clear();
-
-        if (detail.name().equalsIgnoreCase(WilayaDetail.COMMUNE_ONLY.name())) {
-            JacksonProviderConfig.fieldNames.add("postDetails");
-        }
+        Utils.updateJsonFilter(detail);
 
         log.info("Getting All Commune Daira {} for Wilaya {} from Database with detail {} ",
                 dairaId,
@@ -43,6 +40,7 @@ public class CommuneService {
     }
 
     public Optional<CommuneDto> getCommuneById(Long communeId, Long dairaId, String wilayaid) {
+
         JacksonProviderConfig.fieldNames.clear();
 
         log.info("Getting Commune {} Daira {} Wilaya {} from Database ",

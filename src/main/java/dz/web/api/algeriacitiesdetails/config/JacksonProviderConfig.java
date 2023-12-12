@@ -17,6 +17,10 @@ import java.util.Set;
 @Configuration
 public class JacksonProviderConfig {
 
+    public static final String JSON_FILTE_DAIRA ="Dairas";
+    public static final String JSON_FILTE_COMMUNE ="Communes";
+    public static final String JSON_FILTE_POST ="Postes";
+
     public static  Set<String> fieldNames = new HashSet<>();
 
     @Bean
@@ -31,7 +35,6 @@ public class JacksonProviderConfig {
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;
     }
-
 
 
 }

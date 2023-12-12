@@ -2,6 +2,7 @@ package dz.web.api.algeriacitiesdetails.model;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,7 +44,7 @@ public record WilayaDtoRecord(
 
                                     description = "List of Administrative Daira in selected Wilaya"
                             )
-                            @JsonProperty("Dairas")
+                            @JsonProperty(JacksonProviderConfig.JSON_FILTE_DAIRA)
                             List<DairaDto> dairaList) {
 
     /**

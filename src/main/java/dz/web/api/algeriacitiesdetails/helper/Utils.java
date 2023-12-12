@@ -1,5 +1,8 @@
 package dz.web.api.algeriacitiesdetails.helper;
 
+import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
+import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
 
@@ -54,5 +57,19 @@ public class Utils {
         }
 
         return null;
+    }
+
+
+    public static void updateJsonFilter(WilayaDetail wilayaDetail){
+
+        JacksonProviderConfig.fieldNames.clear();
+
+        switch (wilayaDetail){
+            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_DAIRA);
+            case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_COMMUNE);
+            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_POST);
+            default  ->   JacksonProviderConfig.fieldNames.clear();
+        }
+
     }
 }

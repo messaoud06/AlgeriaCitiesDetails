@@ -3,6 +3,7 @@ package dz.web.api.algeriacitiesdetails.service;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.helper.Utils;
 import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.repository.WilayaRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +33,7 @@ public class WilayaService {
 
         Comparator<Wilaya> comparing;
 
-        JacksonProviderConfig.fieldNames.clear();
-        switch (details){
-            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add("dairaDtoList");
-            case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add("communes");
-            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            case ALL ->  JacksonProviderConfig.fieldNames.clear();
-        }
+        Utils.updateJsonFilter(details);
 
         if (sort_by.equalsIgnoreCase("id") || sort_by.equalsIgnoreCase("code")){
             comparing = Comparator.comparing(Wilaya::getId);
@@ -63,18 +58,12 @@ public class WilayaService {
      */
     public Optional<WilayaDtoRecord> getWilayaById(String wilayaId, WilayaDetail details) {
 
-        JacksonProviderConfig.fieldNames.clear();
-        switch (details){
-            case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add("communes");
-            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
-            default ->  JacksonProviderConfig.fieldNames.clear();
-        }
+       Utils.updateJsonFilter(details);
 
         log.info("Getting Wilaya {} from Database with detail {} ",
                 wilayaId,
                 (JacksonProviderConfig.fieldNames.isEmpty())? details.name():"ALL"
         );
-
 
         return wilayaRepository
                 .findWilayasByWilayaCode(wilayaId)
