@@ -46,7 +46,7 @@ class WilayaControllerTests {
 
         WilayaDtoRecord wilayaDto = new WilayaDtoRecord("01","Test","",null);
         WilayaDtoRecord wilayaDto1 = new WilayaDtoRecord("02","Test","",null);
-        doReturn(List.of(wilayaDto,wilayaDto1)).when(wilayaService).getAllWilaya(any());
+        doReturn(List.of(wilayaDto,wilayaDto1)).when(wilayaService).getAllWilaya(any(), any());
 
 
         mockMvc.perform(get("/wilaya/")

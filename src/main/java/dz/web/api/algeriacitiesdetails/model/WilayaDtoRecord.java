@@ -1,5 +1,6 @@
 package dz.web.api.algeriacitiesdetails.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.entity.Wilaya;
@@ -16,6 +17,7 @@ import java.util.List;
 @Schema(name = "Wilaya",
         description = "Wilaya information"
 )
+@JsonFilter("detailsFilter")
 public record WilayaDtoRecord(
                             @NotEmpty(message = "Wilaya Code can not be a null or empty")
                             @Pattern(regexp="(^$|[0-9]{2})",message = "Wilaya Code must be 2 digits")

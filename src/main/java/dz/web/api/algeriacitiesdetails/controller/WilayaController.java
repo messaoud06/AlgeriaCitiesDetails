@@ -65,7 +65,8 @@ public class WilayaController {
     }
     )
     @GetMapping("/")
-    ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "DAIRA_ONLY") WilayaDetail detail){
+    ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "WILAYA_ONLY") WilayaDetail detail,
+                                                     @RequestParam(required = false,defaultValue = "id") String sort_by){
 
         log.info("Getting All Wilaya with details {}", detail.name());
 
@@ -75,7 +76,7 @@ public class WilayaController {
                 .register(meterRegistry);
         counter.increment();
 
-       return ResponseEntity.ok(wilayaService.getAllWilaya(detail));
+       return ResponseEntity.ok(wilayaService.getAllWilaya(detail,sort_by));
     }
 
 

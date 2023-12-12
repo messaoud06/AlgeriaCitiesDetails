@@ -28,20 +28,29 @@ public class WilayaService {
      * @param details
      * @return List Of WilayaDtoRecord
      */
-    public List<WilayaDtoRecord> getAllWilaya(WilayaDetail details) {
+    public List<WilayaDtoRecord> getAllWilaya(WilayaDetail details,String sort_by) {
+
+        Comparator<Wilaya> comparing;
 
         JacksonProviderConfig.fieldNames.clear();
         switch (details){
-            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add("dairaList");
+            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add("dairaDtoList");
             case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add("communes");
             case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add("postDetails");
             case ALL ->  JacksonProviderConfig.fieldNames.clear();
         }
 
+        if (sort_by.equalsIgnoreCase("id") || sort_by.equalsIgnoreCase("code")){
+            comparing = Comparator.comparing(Wilaya::getId);
+        }
+        else {
+            comparing = Comparator.comparing(Wilaya::getWilayaNameFr);
+        }
+
         log.info("Getting All Wilaya from Database with detail {} ",(JacksonProviderConfig.fieldNames.isEmpty())? details.name():"ALL");
 
         return wilayaRepository.findAll().stream()
-                .sorted(Comparator.comparing(Wilaya::getId))
+                .sorted(comparing)
                 .map(WilayaDtoRecord::build)
                 .toList();
     }
