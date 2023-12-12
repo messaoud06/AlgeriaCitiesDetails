@@ -48,8 +48,6 @@ public class Utils {
             }
         }
 
-
-
         if (request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV4) ||
             request.getRemoteAddr().equalsIgnoreCase(LOCALHOST_IPV6))
         {
@@ -65,9 +63,9 @@ public class Utils {
         JacksonProviderConfig.fieldNames.clear();
 
         switch (wilayaDetail){
-            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_DAIRA);
-            case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_COMMUNE);
-            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTE_POST);
+            case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTER_DAIRA);
+            case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTER_COMMUNE);
+            case COMMUNE_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTER_POST);
             default  ->   JacksonProviderConfig.fieldNames.clear();
         }
 

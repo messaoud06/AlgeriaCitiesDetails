@@ -17,7 +17,7 @@ import java.util.List;
 )
 public record DairaDto(String dairaNameFr,
                        String dairaNameAr,
-                       @JsonProperty(JacksonProviderConfig.JSON_FILTE_COMMUNE)
+                       @JsonProperty(JacksonProviderConfig.JSON_FILTER_COMMUNE)
                        List<CommuneDto> communeDtoList) {
 
 

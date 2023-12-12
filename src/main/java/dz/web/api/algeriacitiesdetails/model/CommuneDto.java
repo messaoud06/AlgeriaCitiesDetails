@@ -16,7 +16,7 @@ import java.util.List;
 )
 public record CommuneDto(String communeNameFr,
                          String communeNameAr,
-                         @JsonProperty(JacksonProviderConfig.JSON_FILTE_POST)
+                         @JsonProperty(JacksonProviderConfig.JSON_FILTER_POST)
                          List<PostDetailDto> postDetailDtoList) {
 
     public static CommuneDto build(Commune commune){
