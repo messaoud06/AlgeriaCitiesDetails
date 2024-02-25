@@ -28,7 +28,7 @@ import java.util.List;
         description = "REST APIs in Algeria Cities to FETCH Commune details"
 )
 @RestController
-@RequestMapping(value = "/wilaya/{wilayaId}/daira/{dairaId}/commune",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/wilaya/{wilayaId}/daira/{dairaId}/communes",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Log4j2
 public class CommuneController {

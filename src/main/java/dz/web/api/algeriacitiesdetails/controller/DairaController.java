@@ -27,7 +27,7 @@ import java.util.List;
         description = "REST APIs in Algeria Cities to FETCH Daira details"
 )
 @RestController
-@RequestMapping(value = "/wilaya/{wilayaId}/daira",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/wilaya/{wilayaId}/dairas",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Log4j2
 public class DairaController {

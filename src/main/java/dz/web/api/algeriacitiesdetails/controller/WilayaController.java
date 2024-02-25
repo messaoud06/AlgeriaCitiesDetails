@@ -29,7 +29,7 @@ import java.util.List;
         description = "REST APIs in Algeria Cities to FETCH Wilaya details"
 )
 @RestController
-@RequestMapping(value = "/wilaya",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/wilayas",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Log4j2
 public class WilayaController {
