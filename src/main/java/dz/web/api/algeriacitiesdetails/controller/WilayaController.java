@@ -1,7 +1,9 @@
 package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.helper.Utils;
 import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
+import dz.web.api.algeriacitiesdetails.service.PrayerTimesService;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -18,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -29,13 +33,15 @@ import java.util.List;
         description = "REST APIs in Algeria Cities to FETCH Wilaya details"
 )
 @RestController
-@RequestMapping(value = "/wilayas",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Log4j2
 public class WilayaController {
 
     private final WilayaService wilayaService;
     private final MeterRegistry meterRegistry;
+
+    private final PrayerTimesService prayerTimesService;
 
 
 
@@ -64,7 +70,7 @@ public class WilayaController {
             )
     }
     )
-    @GetMapping("/")
+    @GetMapping("/wilayas")
     ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "WILAYA_ONLY") WilayaDetail detail,
                                                      @RequestParam(required = false,defaultValue = "id") String sort_by){
 
@@ -112,8 +118,21 @@ public class WilayaController {
             )
     }
     )
-    @GetMapping(  {"/{wilayaId}","/{wilayaId}/"})
-    ResponseEntity<WilayaDtoRecord> gerWilayaById(@PathVariable String wilayaId,@RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail){
+    @GetMapping(  {"/wilaya/{wilayaId}","/wilaya/{wilayaId}/"})
+    ResponseEntity<WilayaDtoRecord> gerWilayaById(@PathVariable String wilayaId,
+                                                  @RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail,
+                                                  @RequestParam(required = false) String date){
+
+        //date = "22-12-2024";
+        if(date==null){
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            date = today.format(formatter);
+        }
+
+        if(!Utils.isValidDate("dd-MM-yyyy",date)){
+            return ResponseEntity.badRequest().build();
+        }
 
         Counter counter = Counter.builder("wilaya_byId")
                 .tag("title", "wiliya_byId")
@@ -121,9 +140,12 @@ public class WilayaController {
                 .register(meterRegistry);
         counter.increment();
 
+
+        String finalDate = date;
         return wilayaService.getWilayaById(wilayaId,detail)
                 .map(wilaya -> {
                     log.info("Getting Wilaya {} with detail {}", wilayaId,detail);
+                    System.out.println(prayerTimesService.getPrayer(wilaya.WilayaNameFr(), finalDate).fajr());
                     return ResponseEntity
                             .ok()
                             .body(wilaya);

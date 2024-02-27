@@ -1,5 +1,6 @@
 package dz.web.api.algeriacitiesdetails.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Commune;
@@ -14,6 +15,7 @@ import java.util.List;
 @Schema(name = "Commune",
         description = "Commune information"
 )
+@JsonFilter("detailsFilter")
 public record CommuneDto(String communeNameFr,
                          String communeNameAr,
                          @JsonProperty(JacksonProviderConfig.JSON_FILTER_POST)

@@ -53,4 +53,9 @@ public class DairaService {
                 .map(DairaDto::build)
                 .toList();
     }
+
+    public Optional<Daira> getDairaById(Long id) {
+
+        return dairaRepository.findById(id);
+    }
 }

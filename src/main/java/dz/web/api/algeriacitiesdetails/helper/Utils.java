@@ -1,24 +1,31 @@
 package dz.web.api.algeriacitiesdetails.helper;
 
 import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
+import dz.web.api.algeriacitiesdetails.entity.Commune;
+import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
+import dz.web.api.algeriacitiesdetails.service.CommuneService;
+import dz.web.api.algeriacitiesdetails.service.DairaService;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @Author Messaoud GUERNOUTI on 11/5/2023
  */
+
 public class Utils {
 
-    private Utils(){
 
-    }
-
-    private static final List<String> POSSIBLE_IP_HEADERS = List.of(
+     private static final List<String> POSSIBLE_IP_HEADERS = List.of(
             "X-Forwarded-For",
             "HTTP_FORWARDED",
             "HTTP_FORWARDED_FOR",
@@ -62,6 +69,7 @@ public class Utils {
 
         JacksonProviderConfig.fieldNames.clear();
 
+
         switch (wilayaDetail){
             case WILAYA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTER_DAIRA);
             case DAIRA_ONLY -> JacksonProviderConfig.fieldNames.add(JacksonProviderConfig.JSON_FILTER_COMMUNE);
@@ -69,5 +77,44 @@ public class Utils {
             default  ->   JacksonProviderConfig.fieldNames.clear();
         }
 
+    }
+
+
+    public static boolean isValidDate(String format,String date){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+
+
+        try {
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+    }
+
+
+    public static String getNameById(String id, WilayaService wilayaService, DairaService dairaService, CommuneService communeService){
+
+        Optional<WilayaDtoRecord> wilayaById = wilayaService.getWilayaById(id, WilayaDetail.WILAYA_ONLY);
+
+        if (wilayaById.isPresent()){
+            return wilayaById.get().WilayaNameFr();
+        }
+
+        Optional<Daira> dairaById = dairaService.getDairaById(Long.valueOf(id));
+
+        if (dairaById.isPresent()){
+            return dairaById.get().getDairaNameFr();
+        }
+
+        Optional<Commune> communeById = communeService.findCommuneById(Long.valueOf(id));
+
+        if (communeById.isPresent()){
+            return communeById.get().getCommuneNameFr();
+        }
+
+        return null;
     }
 }
