@@ -1,6 +1,7 @@
 package dz.web.api.algeriacitiesdetails.controller;
 
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.exception.GenericException;
 import dz.web.api.algeriacitiesdetails.helper.Utils;
 import dz.web.api.algeriacitiesdetails.interfaces.PrayerTimesController;
 import dz.web.api.algeriacitiesdetails.model.PrayerTimes;
@@ -11,6 +12,7 @@ import dz.web.api.algeriacitiesdetails.service.PrayerTimesService;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,24 +35,11 @@ public class PrayerTimesControllerImpl implements PrayerTimesController {
     @Override
     public ResponseEntity<PrayerTimes> getPrayerTimes(String id, String date) {
 
-        if(date==null){
-            LocalDate today = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            date = today.format(formatter);
-        }
 
-        if(!Utils.isValidDate("dd-MM-yyyy",date)){
-            return ResponseEntity.badRequest().build();
-        }
+        PrayerTimes prayer = prayerTimesService.getPrayer(
+                Utils.getNameById(id, wilayaService, dairaService, communeService),
+                Utils.validatePrayerDate(date));
 
-
-        String nameById = Utils.getNameById(id, wilayaService, dairaService, communeService);
-
-        if(nameById==null){
-            return ResponseEntity.badRequest().build();
-        }
-
-        PrayerTimes prayer = prayerTimesService.getPrayer(nameById, date);
         return ResponseEntity.ok(prayer);
     }
 }

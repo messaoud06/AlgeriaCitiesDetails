@@ -2,6 +2,7 @@ package dz.web.api.algeriacitiesdetails.exception;
 
 
 import dz.web.api.algeriacitiesdetails.helper.Utils;
+import dz.web.api.algeriacitiesdetails.model.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -29,6 +30,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -122,14 +124,21 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(GenericException.class)
+    public ResponseEntity<ErrorResponse> exception(HttpServletRequest request, GenericException exception){
+        log.error("Error at {} with message {} " , LocalDateTime.now(), exception.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage()),HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> globalException(HttpServletRequest request, Exception exception) {
         log.error("Global Exception {} {} {}",exception.getClass() ,exception.getMessage(),Utils.getIpAddressFromHeader(request));
 
-        exception.printStackTrace();
+       // exception.printStackTrace();
         return new ResponseEntity<>("Internal Exception", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 
 
 }

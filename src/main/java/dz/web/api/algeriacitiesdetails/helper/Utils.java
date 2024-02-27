@@ -4,12 +4,14 @@ import dz.web.api.algeriacitiesdetails.config.JacksonProviderConfig;
 import dz.web.api.algeriacitiesdetails.entity.Commune;
 import dz.web.api.algeriacitiesdetails.entity.Daira;
 import dz.web.api.algeriacitiesdetails.enums.WilayaDetail;
+import dz.web.api.algeriacitiesdetails.exception.GenericException;
 import dz.web.api.algeriacitiesdetails.model.WilayaDtoRecord;
 import dz.web.api.algeriacitiesdetails.service.CommuneService;
 import dz.web.api.algeriacitiesdetails.service.DairaService;
 import dz.web.api.algeriacitiesdetails.service.WilayaService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
@@ -99,6 +101,7 @@ public class Utils {
 
         Optional<WilayaDtoRecord> wilayaById = wilayaService.getWilayaById(id, WilayaDetail.WILAYA_ONLY);
 
+
         if (wilayaById.isPresent()){
             return wilayaById.get().WilayaNameFr();
         }
@@ -115,6 +118,22 @@ public class Utils {
             return communeById.get().getCommuneNameFr();
         }
 
-        return null;
+        throw new GenericException("Id Wilaya/Daira/commune Not Found");
+    }
+
+
+    public static String validatePrayerDate(String date){
+
+        if(date==null){
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            date = today.format(formatter);
+        }
+
+        if(!Utils.isValidDate("dd-MM-yyyy",date)){
+            throw new GenericException("Format Date incorrect");
+        }
+
+        return date;
     }
 }
