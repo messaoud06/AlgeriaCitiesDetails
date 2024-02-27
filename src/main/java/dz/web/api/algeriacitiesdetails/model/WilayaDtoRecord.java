@@ -39,7 +39,7 @@ public record WilayaDtoRecord(
                             )
                             String wilayaNameAR,
 
-                            @NotEmpty(message = "List od Daira can not be a null or empty")
+                            @NotEmpty(message = "List of Daira can not be a null or empty")
                             @Schema(
 
                                     description = "List of Administrative Daira in selected Wilaya"

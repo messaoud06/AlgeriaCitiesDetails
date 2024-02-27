@@ -1,5 +1,8 @@
 server:
   port: 8081
+  adhan:
+    api:
+      url: https://api.aladhan.com/v1/timingsByCity/
   servlet:
     context-path: /algeria-cities
 spring:
@@ -23,7 +26,6 @@ spring:
   web:
     resources:
       add-mappings: false
-
 #### Actuator Config
 management:
   endpoints:

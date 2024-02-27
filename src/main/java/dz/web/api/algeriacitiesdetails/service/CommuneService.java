@@ -53,4 +53,9 @@ public class CommuneService {
                 .findCommuneByIdAndDaira_IdAndDaira_Wilaya_WilayaCode(communeId,dairaId,wilayaid)
                 .map(CommuneDto::build);
     }
+
+    public Optional<Commune> findCommuneById(Long id) {
+
+       return communeRepository.findById(id);
+    }
 }

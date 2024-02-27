@@ -20,6 +20,7 @@ public class JacksonProviderConfig {
     public static final String JSON_FILTER_DAIRA ="Dairas";
     public static final String JSON_FILTER_COMMUNE ="Communes";
     public static final String JSON_FILTER_POST ="Postes";
+    public static final String JSON_FILTER_PRAYER_TIMES ="PrayerTimes";
 
     public static  Set<String> fieldNames = new HashSet<>();
 
