@@ -27,14 +27,12 @@ public class WebClientConfig {
         HttpClient httpClient = HttpClient.create()
                 .responseTimeout(Duration.ofSeconds(20));
 
-        System.out.println("------------------------------------------------------- " + PRAYER_TIME_URL);
         WebClient webClient = WebClient
                 .builder()
                 .filters(exchangeFilterFunctions -> {
                                 exchangeFilterFunctions.add(logRequest());
                                 })
                 .baseUrl(PRAYER_TIME_URL)
-                //.clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
 
         return webClient;
@@ -43,14 +41,11 @@ public class WebClientConfig {
     private ExchangeFilterFunction logRequest() {
         return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
 
-                StringBuilder sb = new StringBuilder("Request: \n");
-                //append clientRequest method and url
-                clientRequest
-                        .headers()
-                        .forEach((name, values) -> values.forEach(value -> {/* append header key/value */}));
+            StringBuilder sb = new StringBuilder("Request: \n");
 
-                sb.append("Method : "+clientRequest.method());
-                sb.append(" url : "+clientRequest.url());
+            sb.append("Method : "+clientRequest.method());
+            sb.append(" url : "+clientRequest.url());
+
             System.out.println(sb);
 
             return Mono.just(clientRequest);
