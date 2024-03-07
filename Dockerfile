@@ -6,7 +6,7 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
-
+RUN git update-index --chmod=+x mvnw
 RUN ./mvnw install -DskipTests
 ENTRYPOINT ["java","-jar","target/algeriacitiesdetails-1.1.0.jar"]
 
