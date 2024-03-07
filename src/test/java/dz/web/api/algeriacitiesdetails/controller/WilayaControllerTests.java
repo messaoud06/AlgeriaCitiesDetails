@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +49,7 @@ class WilayaControllerTests {
         doReturn(List.of(wilayaDto,wilayaDto1)).when(wilayaService).getAllWilaya(any(), any());
 
 
-        mockMvc.perform(get("/wilaya/")
+        mockMvc.perform(get("/wilayas/")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .queryParam("detail","DAIRA_ONLY")
                        )
@@ -64,7 +64,7 @@ class WilayaControllerTests {
     @DisplayName("Get WilayaByCode Success")
     void testWilayaByCodeSuccess() throws Exception {
 
-        Wilaya wilayaResult = new Wilaya(16L,"16","Alger","",new HashSet<>());
+        WilayaDtoRecord wilayaResult = new WilayaDtoRecord("16","Alger","الجزائر",new ArrayList<>());
 
         doReturn(Optional.of(wilayaResult)).when(wilayaService).getWilayaById(any(),any());
 

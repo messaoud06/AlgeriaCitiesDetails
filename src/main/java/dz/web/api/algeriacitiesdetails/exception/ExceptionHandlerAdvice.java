@@ -135,7 +135,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> globalException(HttpServletRequest request, Exception exception) {
         log.error("Global Exception {} {} {}",exception.getClass() ,exception.getMessage(),Utils.getIpAddressFromHeader(request));
 
-       // exception.printStackTrace();
+       exception.printStackTrace();
         return new ResponseEntity<>("Internal Exception", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

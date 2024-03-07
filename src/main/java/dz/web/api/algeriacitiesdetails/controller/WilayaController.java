@@ -41,7 +41,6 @@ public class WilayaController {
     private final WilayaService wilayaService;
     private final MeterRegistry meterRegistry;
 
-    private final PrayerTimesService prayerTimesService;
 
 
 
@@ -70,7 +69,7 @@ public class WilayaController {
             )
     }
     )
-    @GetMapping("/wilayas")
+    @GetMapping({"wilayas","wilayas/"})
     ResponseEntity<List<WilayaDtoRecord>> getWilayas(@RequestParam(required = false,defaultValue = "WILAYA_ONLY") WilayaDetail detail,
                                                      @RequestParam(required = false,defaultValue = "id") String sort_by){
 
@@ -118,7 +117,7 @@ public class WilayaController {
             )
     }
     )
-    @GetMapping(  {"/wilaya/{wilayaId}","/wilaya/{wilayaId}/"})
+    @GetMapping(  {"wilaya/{wilayaId}","wilaya/{wilayaId}/"})
     ResponseEntity<WilayaDtoRecord> gerWilayaById(@PathVariable String wilayaId,
                                                   @RequestParam(required = false,defaultValue =  "DAIRA_ONLY") @NotNull WilayaDetail detail,
                                                   @RequestParam(required = false) String date){
@@ -141,11 +140,9 @@ public class WilayaController {
         counter.increment();
 
 
-        String finalDate = date;
         return wilayaService.getWilayaById(wilayaId,detail)
                 .map(wilaya -> {
                     log.info("Getting Wilaya {} with detail {}", wilayaId,detail);
-                    System.out.println(prayerTimesService.getPrayer(wilaya.WilayaNameFr(), finalDate).fajr());
                     return ResponseEntity
                             .ok()
                             .body(wilaya);
