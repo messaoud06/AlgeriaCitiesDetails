@@ -17,7 +17,8 @@ import java.util.List;
         description = "Daira information"
 )
 @JsonFilter("detailsFilter")
-public record DairaDto(String dairaNameFr,
+public record DairaDto( long id,
+                       String dairaNameFr,
                        String dairaNameAr,
                        @JsonProperty(JacksonProviderConfig.JSON_FILTER_COMMUNE)
                        List<CommuneDto> communeDtoList) {
@@ -29,6 +30,6 @@ public record DairaDto(String dairaNameFr,
                 .stream()
                 .map(CommuneDto::build)
                 .toList();
-        return new DairaDto(daira.getDairaNameFr(), daira.getDairaNameAr(), communeDtoList);
+        return new DairaDto(daira.getId(), daira.getDairaNameFr(), daira.getDairaNameAr(), communeDtoList);
     }
 }
