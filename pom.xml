@@ -118,12 +118,6 @@
                     <image>
                         <name>messaoud06/algeriacities:1.1</name>
                     </image>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
                 </configuration>
             </plugin>
 
